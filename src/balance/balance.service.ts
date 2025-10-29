@@ -35,9 +35,10 @@ export class BalanceService {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
 
-    await this.cacheManager.set(cacheKey, user.balance, 60000);
+    const balance = Number(user.balance);
+    await this.cacheManager.set(cacheKey, balance, 60000);
 
-    return { userId, balance: Number(user.balance) };
+    return { userId, balance };
   }
 
   async debitBalance(userId: number, amount: number): Promise<{
